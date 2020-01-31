@@ -5,7 +5,7 @@ include 'inc/templates/header.php';
 include 'inc/funciones/funciones.php';
 
 if (isset($_REQUEST['opcion'])) {
-    $estudianteCtrl= new EstudianteCtrl();
+    $estudianteCtrl = new EstudianteCtrl();
     $estudianteCtrl->registrar($_POST);
     return;
 }
@@ -74,7 +74,7 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                 <input type="hidden" id="avatar" name="avatar" value="0">
                 <div id="carouselAvatar" class="carousel slide avatar" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner">
-                        <div class="carousel-item <?php if ( $avatar === '0') {
+                        <div class="carousel-item <?php if ($avatar === '0') {
                                                         echo 'active';
                                                     } ?>">
                             <img src="../../../recursos/img/avatars/av-0.png" class="d-block w-100" alt="Avatar 1">
@@ -126,14 +126,16 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <label for="nombres">Nombres: <span class="text-danger">*</span></label>
-                <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Tu Nombre Completo" required value="<?php echo $nombres ?>">
-                <label for="apellidos">Apellidos </label>
-                <input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="¿Tienes un sitio web?" value="<?php echo $apellidos ?>">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nombres">Nombres: <span class="text-danger">*</span></label>
+                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Tu Nombre Completo" required value="<?php echo $nombres ?>">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellidos">Apellidos </label>
+                    <input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="¿Tienes un sitio web?" value="<?php echo $apellidos ?>">
+                </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="correo">E-mail: <span class="text-danger">*</span></label>
@@ -162,7 +164,7 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="fechaNacimiento">Fecha de Nacimiento: <span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" require value="<?php echo $fechaNacimiento?>">
+                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" require value="<?php echo $fechaNacimiento ?>">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="telefono">Teléfono: <span class="text-danger">*</span></label>
@@ -189,11 +191,11 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="provincia">Provincia:<span class="text-danger">*</span></label>
-                    <input type="tel" id="provincia" name="provincia" class="form-control" required value="<?php echo $provincia ?>">
+                    <select id="provincia" name="provincia" class="form-control" required> </select>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="codigoPostal">Código postal: </label>
-                    <input type="number" class="form-control" id="Código postal:" name="codigoPostal" value="<?php echo $codigoPostal?>">
+                    <input type="number" class="form-control" id="Código postal:" name="codigoPostal" value="<?php echo $codigoPostal ?>">
                     <div class="invalid-feedback">
                         Por favor ingresa un Código postal.
                     </div>
@@ -210,7 +212,7 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                 </div>
                 <div class="col">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="masculino" name="genero" value="MASCULINO" class="custom-control-input" <?= $genero== 'MASCULINO' ? ' checked' : ''; ?>>
+                        <input type="radio" id="masculino" name="genero" value="MASCULINO" class="custom-control-input" <?= $genero == 'MASCULINO' ? ' checked' : ''; ?>>
                         <label class="custom-control-label" for="masculino">Masculino</label>
                     </div>
                 </div>
@@ -251,21 +253,18 @@ include 'inc/templates/footer.php';
         console.log("Avatar seleccionado: " + numImagen);
         $("#avatar").val(numImagen);
     });
+
+    //Carga las Provincias al combo usando ajax
+    $(document).ready(function(){
+    $("#pais").on('change', function () {
+        $("#pais option:selected").each(function () {
+            pais=$(this).val();
+            $.post("inc/funciones/provincias.php", { pais: pais }, function(data){
+                $("#provincia").html(data);
+            });			
+        });
+   });
+});
 </script>
 
-<!-- 
-FUNCIONAMIENTO DEL CÓDIGO IMPLEMENTADO
 
-La página index.php básicamente contiene los datos del formulario que se envían por el método POST hacia la página validar.php, la cual realiza  6 validaciones 
-y si existe algún error de validación redirecciona a la pagina index.php con el parámetro mensajes=true, adicional guarda temporalmente en sesión los valores $_POST 
-y la lista de mensajes de errores de las validaciones, para que puedan ser cargados en el formulario y evitar que  usuario tenga que digitar nuevamente todos los campos.
-
-Para optimizar el código implementé dos páginas templates uno para la cabecera (header.php) y otra para el pie de página (footer.php).
-Usualmente me gusta tener una clase de funciones (funciones.php), la cual contiene los métodos que puedo usarlos en cualquier página php del proyecto.
-
-Para el diseño utilizo el framework Bootstrap, también utilizo los iconos free de FontAwesome.
-
-En el cliente estoy utilizando Jquery que es requerido por bootstrap para que funcionen todos sus componentes. 
-Para poner un poco de complejidad implemente la opción de seleccionar un avatar y mediante jquery poder pasar el valor seleccionado a un input hidden.
-
--->
