@@ -8,7 +8,7 @@ include 'vistas/inc/funciones/funciones.php';
 <section class="jumbotron text-center">
   <div class="container">
     <h1>AppCursos</h1>
-    <p class="lead text-muted">Es una plataforma de aprendizaje en línea. Está dirigido para adultos profesionales..</p>
+    <p class="lead text-muted">Es una plataforma de aprendizaje en línea, dirigida para adultos profesionales.</p>
     <p>
       <a href="#" class="btn btn-primary my-2">Registrarse</a>
     </p>

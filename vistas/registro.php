@@ -1,15 +1,13 @@
 <?php
 require_once('../controladores/EstudianteCtrl.php');
-session_start();
-include 'inc/templates/header.php';
-include 'inc/funciones/funciones.php';
-
 if (isset($_REQUEST['opcion'])) {
     $estudianteCtrl = new EstudianteCtrl();
     $estudianteCtrl->registrar($_POST);
     return;
 }
 
+include 'inc/templates/header.php';
+include 'inc/funciones/funciones.php';
 
 //Si se redirecciona por algun error de validación
 if (isset($_REQUEST['mensajes'])) {
@@ -36,8 +34,6 @@ $provincia = isset($_POST['provincia']) ? $_POST['provincia'] : '';
 $codigoPostal = isset($_POST['codigoPostal']) ? $_POST['codigoPostal'] : '';
 $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : '';
 $genero = isset($_POST['genero']) ? $_POST['genero'] : '';
-$chkIntereses = isset($_POST['chkIntereses']) ? $_POST['chkIntereses'] : [];
-$teaComentario = isset($_POST['teaComentario']) ? $_POST['teaComentario'] : '';
 $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
 ?>
 

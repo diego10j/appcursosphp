@@ -72,7 +72,7 @@ class Estudiante
     {
         try {
             $sql = "DELETE FROM ESTUDIANTE where idEstudiante=?";
-            $sentencia = $this->DB->prepare($sql);
+            $sentencia = $this->db->getConexion()->prepare($sql);
             $sentencia->execute(array($id));
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -86,7 +86,7 @@ class Estudiante
     {
         try {
             $sql = "SELECT * FROM ESTUDIANTE where idEstudiante = ?";
-            $sentencia = $this->DB->prepare($sql);
+            $sentencia = $this->db->getConexion()->prepare($sql);
             $sentencia->execute(array($id));
             $datos = $sentencia->fetch(PDO::FETCH_ASSOC);
             return $datos;
@@ -100,7 +100,7 @@ class Estudiante
     function getEstudiantes()
     {
         $sql = 'SELECT * FROM ESTUDIANTE ORDER BY apellidos,nombres';
-        $datos = $this->DB->query($sql);
+        $datos = $this->db->getConexion()->query($sql);
         return  $datos;
     }
 
@@ -108,14 +108,29 @@ class Estudiante
     function validarLogin($correo, $clave)
     {
         $sql = 'SELECT * FROM ESTUDIANTE WHERE correo = ?';
-        $sentencia = $this->DB->prepare($sql);
+        $sentencia = $this->db->getConexion()->prepare($sql);
         $sentencia->execute(array($correo));
         $datos = $sentencia->fetch(PDO::FETCH_ASSOC);
-        $claveUsuario = $datos->password;
-
-        if ($clave == $claveUsuario) {
-            return $datos;
+        if (isset($datos)) {
+            $claveUsuario = $datos['clave'];
+            if ($clave == $claveUsuario) {
+                return $datos;
+            }
         }
     }
+
+    function getTotalEstudiantes()
+    {
+        $sql = 'SELECT count(1) as total FROM ESTUDIANTE';
+        $sentencia = $this->db->getConexion()->prepare($sql);
+        $sentencia->execute();
+        $datos = $sentencia->fetch(PDO::FETCH_ASSOC);
+        if (isset($datos)) {
+            return isset($datos['total']) ? $datos['total'] : 0;
+        }
+        if (isset($datos)) {            
+            return $datos['total'];
+        }
+        return 0;
+    }
 }
-?>
