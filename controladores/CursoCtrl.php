@@ -12,29 +12,38 @@ class CursoCtrl
     function guardar($datos)
     {
         //Validaciones 
-        $this->curso->guardar($datos);
+        $guardo = $this->curso->guardar($datos);
+        if ($guardo) {
+            header("Location: cursos.php");
+        }
     }
 
 
     function modificar($datos, $id)
     {
-        $this->curso->modificar($datos, $id);
+        $modifico =  $this->curso->modificar($datos, $id);
+        if ($modifico) {
+            header("Location: cursos.php");
+        }
     }
 
 
     function eliminar($id)
     {
-        $this->curso->eliminar($id);
+        $elimino=  $this->curso->eliminar($id);
+        if ($elimino) {
+            header("Location: cursos.php");
+        }
     }
 
     function getCursos()
     {
-        $this->curso->getCursos();
+        return  $this->curso->getCursos();
     }
 
     function getCursoPorId($id)
     {
-        $this->curso->getCursoPorId($id);
+        return $this->curso->getCursoPorId($id);
     }
 
     function getTotalCursos()

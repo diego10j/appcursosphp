@@ -1,6 +1,6 @@
 	<!--	Footer -->
-	<br>
-	<footer class="footer">
+
+	<footer class="py4 footer">
 	    <address>
 	        Autor: <a href="mailto:diego10j.89@hotmail.com">DIEGO JACOME</a> <br>
 	        Meteria: Computación Cliente y Servidor <br>

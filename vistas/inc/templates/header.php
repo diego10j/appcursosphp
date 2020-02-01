@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<?php ob_start(); session_start(); ?>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +19,7 @@
   <!-- Navegacion-->
   <!-- As a heading -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">AppCursos</a>
+    <a class="navbar-brand" href="#">AppCursos</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,7 +29,10 @@
       if (!isset($_SESSION['idEstudiante'])) {
       ?>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
+        <li class="nav-item px-2">
+            <a href="/" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/vistas/registro.php">Registrarse</a>
           </li>
         </ul>
@@ -43,7 +45,7 @@
 
         <ul class="navbar-nav">
           <li class="nav-item px-2">
-            <a href="admin.php" class="nav-link active">Dashboard</a>
+            <a href="admin.php" class="nav-link">Dashboard</a>
           </li>
           <li class="nav-item px-2">
             <a href="cursos.php" class="nav-link">Cursos</a>
@@ -55,8 +57,8 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="login.html" class="nav-link">
-              <i class="fas fa-user-times"></i> Cerrar sessión
+            <a href="admin.php?salir=true" class="nav-link">
+              <i  class="fas fa-user-times"></i> Cerrar sessión
             </a>
           </li>
         </ul>

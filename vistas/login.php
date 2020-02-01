@@ -1,7 +1,6 @@
 <?php
 require_once('../controladores/EstudianteCtrl.php');
 include 'inc/templates/header.php';
-include 'inc/funciones/funciones.php';
 
 if (isset($_REQUEST['opcion'])) {
     $estudianteCtrl = new EstudianteCtrl();

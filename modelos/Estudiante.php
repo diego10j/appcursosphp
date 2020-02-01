@@ -100,8 +100,8 @@ class Estudiante
     function getEstudiantes()
     {
         $sql = 'SELECT * FROM ESTUDIANTE ORDER BY apellidos,nombres';
-        $datos = $this->db->getConexion()->query($sql);
-        return  $datos;
+        $fila=$this->db->getConexion()->query($sql);
+        return  $fila;
     }
 
 

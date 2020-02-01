@@ -122,3 +122,23 @@ address {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+
+
+.icono-github {
+  color: #1f1e1e;
+  font-size: 1.8rem;
+}
+
+.icono-like {
+  color: rgb(17, 111, 219);
+  font-size: 1.8rem;
+  cursor: pointer;
+  user-select: none;
+}
+

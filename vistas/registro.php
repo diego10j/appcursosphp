@@ -7,13 +7,15 @@ if (isset($_REQUEST['opcion'])) {
 }
 
 include 'inc/templates/header.php';
-include 'inc/funciones/funciones.php';
+require_once 'inc/funciones/funciones.php';
 
 //Si se redirecciona por algun error de validación
 if (isset($_REQUEST['mensajes'])) {
     //Recupera mensajes
+    session_start();
     $listaMensajes = $_SESSION['mensajes'];
     //Recupera valores Post
+
     if (isset($_SESSION['valores_post'])) {
         $_POST = $_SESSION['valores_post'];
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -24,7 +26,7 @@ $avatar = isset($_POST['avatar']) ? $_POST['avatar'] : '0';
 $nombres = isset($_POST['nombres']) ? $_POST['nombres'] : '';
 $apellidos = isset($_POST['apellidos']) ? $_POST['apellidos'] : '';
 $correo = isset($_POST['correo']) ? $_POST['correo'] : '';
-$confirmaEmail = isset($_POST['confirmaEmail']) ? $_POST['confirmaEmail'] : '';
+$confirmaCorreo = isset($_POST['confirmaCorreo']) ? $_POST['confirmaCorreo'] : '';
 $clave = isset($_POST['clave']) ? $_POST['clave'] : '';
 $confirmaClave = isset($_POST['confirmaClave']) ? $_POST['confirmaClave'] : '';
 $fechaNacimiento = isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : '';
@@ -125,11 +127,11 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nombres">Nombres: <span class="text-danger">*</span></label>
-                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Tu Nombre Completo" required value="<?php echo $nombres ?>">
+                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Tu Nombre" required value="<?php echo $nombres ?>">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="apellidos">Apellidos </label>
-                    <input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="¿Tienes un sitio web?" value="<?php echo $apellidos ?>">
+                    <input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="Tu Apellido" value="<?php echo $apellidos ?>">
                 </div>
             </div>
             <div class="form-row">
@@ -138,8 +140,8 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                     <input type="email" id="correo" name="correo" class="form-control" placeholder="Tu Correo electrónico" required value="<?php echo $correo ?>">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="confirmaEmail">Confirmar E-mail: <span class="text-danger">*</span> </label>
-                    <input type="email" id="confirmaEmail" name="confirmaEmail" class="form-control" placeholder="Confirma tu Correo electrónico" required value="<?php echo $confirmaEmail ?>">
+                    <label for="confirmaCorreo">Confirmar E-mail: <span class="text-danger">*</span> </label>
+                    <input type="email" id="confirmaCorreo" name="confirmaCorreo" class="form-control" placeholder="Confirma tu Correo electrónico" required value="<?php echo $confirmaCorreo ?>">
                 </div>
             </div>
             <div class="form-row">
@@ -175,8 +177,8 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                         <option value="">Seleccione...</option>
                         <?php
                         //Carga las opciones de paises
-                        foreach (getPaises() as $pais) { ?>
-                            <option value="<?= $pais ?>" <?= $pais == $pais  ? ' selected="selected"' : ''; ?>><?= $pais ?></option>
+                        foreach (getPaises() as $paisLista) { ?>
+                            <option value="<?= $paisLista ?>" <?= $pais == $paisLista  ? ' selected="selected"' : ''; ?>><?= $paisLista ?></option>
                         <?php
                         } ?>
 
@@ -191,7 +193,7 @@ $aceptar = isset($_POST['aceptar']) ? $_POST['aceptar'] : '';
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="codigoPostal">Código postal: </label>
-                    <input type="number" class="form-control" id="Código postal:" name="codigoPostal" value="<?php echo $codigoPostal ?>">
+                    <input type="number" class="form-control" id="codigoPostal" name="codigoPostal" value="<?php echo $codigoPostal ?>">
                     <div class="invalid-feedback">
                         Por favor ingresa un Código postal.
                     </div>
@@ -250,7 +252,7 @@ include 'inc/templates/footer.php';
         $("#avatar").val(numImagen);
     });
 
-    //Carga las Provincias al combo usando ajax
+    //Carga las Provincias al combo usando jquery
     $(document).ready(function(){
     $("#pais").on('change', function () {
         $("#pais option:selected").each(function () {
