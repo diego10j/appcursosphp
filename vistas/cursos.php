@@ -11,7 +11,6 @@ if (isset($_REQUEST['eliminar'])) {
   $cursoCtrl->eliminar($_REQUEST['eliminar']);
 }
 
-
 ?>
 
 <!-- HEADER -->
